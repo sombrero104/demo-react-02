@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 
 // [State로 사용자 입력 관리하기]
 
-// 간단한 회원가입 폼 
+// [간단한 회원가입 폼]  
 // 1. 이름
 // 2. 생년월일
 // 3. 국적
@@ -18,16 +18,15 @@ const Register = () => {
         country: "",
         bio: ""
     });
-    // const refObj = useRef();
-    // console.log(refObj);
-    // current 라는 프로퍼티를 갖는 Reference 객체가 하나 출력됨.
-
-    const refObj = useRef(0); // 초기값 0을 주고 출력하기.
-    console.log("Register 렌더링: " + refObj.current); // 0
+    const countRef = useRef(0);
 
     // 통합 이벤트 핸들러. 이벤트가 일어나는 target에 해당하는 name에 value를 설정해줌. 
     const onChange = (e) => {
-        console.log(e.target.name, e.target.value);
+
+        countRef.current++;
+        console.log(countRef.current);
+        // onChange 가 호출될 때마다 카운트(수정한 횟수)가 늘어남.
+
         setInput({
             ...input,
             [e.target.name]: e.target.value,
@@ -36,12 +35,6 @@ const Register = () => {
 
     return (
         <div>
-            {/* 아래 버튼을 클릭해도 리렌더링을 유발하지 않기 때문에 상단의 refObj 콘솔 로그는 다시 실행되지 않음. */}
-            <button onClick={() => {
-                refObj.current++;
-                console.log(refObj.current);
-            }}>ref + 1</button>
-
             <div><input name="name" value={input.name} onChange={onChange} placeholder={"이름"} /> {input.name}</div>
             <div><input name="birth" type="date" value={input.birth} onChange={onChange} /> {input.birth}</div>
             <div>

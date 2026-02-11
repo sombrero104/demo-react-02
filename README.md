@@ -582,14 +582,24 @@ export default Register;
 ~~~
 <br/><br/>
 
-## Reference(useRef)
+## Reference(useRef) 변수 사용하기 
 새로운 Reference 객체를 생성하는 기능. <br/>
+~~~
+const refObject = useRef()
+~~~
+
+컴포넌트 내부의 변수를 생성한다는 점이 useState와 비슷하지만, <br/>
 값이 변경되면 컴포넌트 리렌더링을 하는 useState와 달리 <br/>
 useRef는 **_어떤 경우에도 리렌더링을 유발하지 않음._** <br/>
 **_렌더링에 영향을 미치고 싶지 않은 변수를 생성하고 싶은 경우_** 에 useRef를 사용. <br/>
+
+- useRef: Reference 객체를 생성. (어떤 경우에도 리렌더링을 유발하지 않음.)
+- useState: State를 생성. (그리고 값이 변경되면 컴포넌트 리렌더링.)
+
 <br/>
 useRef를 이용하면 컴포넌트가 렌더링하는 특정 DOM 요소에 접근할 수 있음. <br/>
 그럼으로써 해당 요소를 조작하는 것도 가능. <br/>
+
 ~~~
 const refObj = useRef();
 console.log(refObj);
@@ -611,6 +621,21 @@ console.log(refObj);
   />
 </div>
 ~~~
+
+만약, useRef가 아닌 그냥 변수로 사용한다면? <br/>
+
+~~~
+const Register = () => {
+    // const countRef = useRef(0);
+    let count = 0;
+    .....
+~~~
+
+useRef 사용 안하고 이렇게 변수로 사용할 경우, <br/>
+onChange 가 호출될 때마다 count 변수를 초기화하는 이 부분도 계속 호출되기 때문에 <br/>
+결과 값은 계속 1만 출력됨. <br/>
+**_useState, useRef 같은 경우에는 값이 다시 리셋되지 않도록 내부적으로 설계되어 있음._** <br/>
+
 
 
 
