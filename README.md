@@ -671,6 +671,32 @@ function useInput() {
 ~~~
 <br/><br/>
 
+# 카운터 앱 만들기 
+
+~~~
+cd ~/IdeaProjects/react-study
+npm create vite@latest
+
+Ok to proceed? (y) y
+◇  Project name:
+│  section06
+│
+◇  Select a framework:
+│  React
+│
+◇  Select a variant:
+│  JavaScript
+│
+└  Done. Now run:
+
+  cd section06
+  npm install
+  npm run dev
+~~~
+<br/><br/>
+
+
+
 
 
 <br/><br/><br/><br/>
