@@ -635,8 +635,41 @@ useRef 사용 안하고 이렇게 변수로 사용할 경우, <br/>
 onChange 가 호출될 때마다 count 변수를 초기화하는 이 부분도 계속 호출되기 때문에 <br/>
 결과 값은 계속 1만 출력됨. <br/>
 **_useState, useRef 같은 경우에는 값이 다시 리셋되지 않도록 내부적으로 설계되어 있음._** <br/>
+<br/><br/>
 
+## React Hooks
+클래스 컴포넌트의 기능(State, Ref 등.)을 함수 컴포넌트에서도 사용할 수 있도록 도와주는 메서드들. <br/>
+이름 앞에 동일한 접두사 'use'가 붙음. <br/>
+(useState, useRef, useEffect, useReducer 등. 대략 20개 정도 있음.) <br/>
 
+- useState: State 기능을 낚아채오는 Hook.
+- useRef: Reference 기능을 낚아채오는 Hook.
+
+함수 컴포넌트 내부에서만 호출 가능. <br/>
+~~~
+const Register = () => {
+  const [input, setInput] = useState({  // 이와 같이 함수 컴포넌트 내부에서만 호출. 
+    name: "",
+    birth: "",
+    country: "",
+    bio: "",
+  });
+~~~
+
+조건문, 반복문 내부에서는 호출 불가. <br/>
+~~~
+if (true) {
+  const [state, setState] = useState(); // 사용 X.
+}
+~~~
+
+커스텀 Hook도 제작 가능. <br/>
+~~~
+function useInput() {
+  // input 값을 관리하는 Custom Hook. 
+}
+~~~
+<br/><br/>
 
 
 
