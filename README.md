@@ -713,6 +713,12 @@ Ok to proceed? (y) y
 - 'src/App.css', 'src/index.css' 파일 내용 삭제.
 - 'src/main.jsx' 파일 내용 중 <StrictMode> 태그 삭제. 
 
+> [State Lifting (State 끌어 올리기)] <br/>
+> State를 위로 끌어올려서 하위의 컴포넌트들이 모두 공유할 수 있도록 하는 방법. <br/>
+> 하나의 State를 여러 컴포넌틑에서 사용할 경우, <br/>
+> State는 반드시 공통 부모가 되는 컴포넌트에 두어야 한다. <br/>
+> **_데이터들은 항상 위에서 아래로 하나의 방향으로만 흐름._** (단방향 데이터 흐름.) <br/>
+
 <br/><br/>
 
 
