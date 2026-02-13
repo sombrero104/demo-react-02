@@ -711,13 +711,139 @@ Ok to proceed? (y) y
 - src/assets/react.svg 파일 삭제. 
 - 'src/App.jsx' 파일의 App() 리턴문 내용 삭제.
 - 'src/App.css', 'src/index.css' 파일 내용 삭제.
-- 'src/main.jsx' 파일 내용 중 <StrictMode> 태그 삭제. 
+- 'src/main.jsx' 파일 내용 중 <StrictMode> 태그 삭제.
+<br/><br/>
 
-> [State Lifting (State 끌어 올리기)] <br/>
+> #### State Lifting (State 끌어 올리기)
 > State를 위로 끌어올려서 하위의 컴포넌트들이 모두 공유할 수 있도록 하는 방법. <br/>
 > 하나의 State를 여러 컴포넌틑에서 사용할 경우, <br/>
 > State는 반드시 공통 부모가 되는 컴포넌트에 두어야 한다. <br/>
 > **_데이터들은 항상 위에서 아래로 하나의 방향으로만 흐름._** (단방향 데이터 흐름.) <br/>
+
+<br/><br/>
+
+## 리액트 컴포넌트의 라이프사이클
+Mount -> Update -> UnMount <br/>
+useEffect를 사용하여 라이프사이클을 제어한다. <br/>
+
+- Mount
+  - 컴포넌트가 탄생하는 순간.
+  - 화면에 처음 렌더링 되는 순간.
+- Update 
+  - 컴포넌트가 다시 렌더링 되는 순간.
+  - 리렌더링 될 때를 의미. 
+- UnMount 
+  - 컴포넌트가 화면에서 사라지는 순간.
+  - 렌더링에서 제외되는 순간을 의미.
+
+<br/><br/>
+
+## useEffect 
+리액트 컴포넌트의 '사이드 이펙트'를 제어하는 새로운 React Hook. <br/>
+
+- 사이드 이펙트
+  - 어떠한 동작에 따른 부수적인 효과, 파생되는 효과.
+  - 컴포넌트 내부의 값 변경 (동작) -> 콘솔에 변경된 값 출력 (사이드 이펙트)
+
+~~~
+useEffect(() => {}, []);
+// 두번째 인수로 전달한 배열의 값이 바뀌면, 사이드 이펙트로서 첫번째 인수인 콜백 함수가 실행된다.
+~~~
+
+(예시)
+~~~
+useEffect(() => {}, [count]);
+// 'count' state 값이 바뀔 때마다, 첫번째 인수로 전달한 콜백 함수를 실행시키게 된다.  
+~~~
+~~~
+useEffect(() => {
+  console.log(`count: ${count}`);
+}, [count]);
+// 이 배열을 '의존성 배열'(deps, dependency array)라고 부른다. 
+~~~
+<br/><br/>
+
+## useEffect로 라이프사이클 제어하기 
+
+#### 1. 마운트를 useEffect로 제어하는 방법. 
+빈 배열을 두번째 인수로 주면, 값이 변경 될 일이 없기 때문에 최초 마운트 될 때에만 첫번째 인수의 콜백 함수가 실행된다. <br/>
+
+~~~
+useEffect(() => {
+  console.log("mount");
+}, []); // 빈 배열을 두번째 인수로 전달한다. 
+~~~
+<br/>
+
+#### 2. 업데이트를 useEffect로 제어하는 방법. 
+두번째 인수를 생략하면, 컴포넌트가 리렌더링 될 때마다 계속 콜백 함수가 실행된다. <br/>
+
+~~~
+useEffect(() => {
+  console.log("update"); 
+}); // 두번째 인수를 생략한다. 
+~~~
+
+꼭 마운트 실행되고 나서 업데이트 될 때에만 콜백 함수를 실행하고 싶을 경우에는 <br/>
+마운트가 되었는지 안되었는지 여부를 저장하는 변수를 useRef를 이용해서 만들어 준다. <br/>
+
+~~~
+import { useState, useEffect, useRef } from "react";
+
+const isMount = useRef(false);
+
+useEffect(() => {
+    if(!isMount.current) {
+        isMount.current = true;
+        return;
+    }
+    console.log("update");
+});
+~~~
+<br/>
+
+#### 3. 언마운트를 useEffect로 제어하는 방법.
+아래와 같이 Even(짝수) 컴포넌트를 추가해 준다. <br/>
+
+~~~
+import { useEffect } from "react";
+
+const Even = () => {
+    useEffect(() => {
+        // useEffect의 콜백 함수에서 반환하는 함수를 '클린업', '정리함수'라고 부른다.
+        // 이 정리함수는 useEffect가 끝날 때 실행이 된다.
+        // 두번째 인수가 빈 배열이기 때문에 mount가 될 때 이 useEffect가 실행이 되고,
+        // 끝날 때(즉, unmount 될 때) 아래 정리함수가 실행이 된다.
+        return () => {
+            console.log("unmount");
+        };
+    }, []);
+    return <div>짝수입니다.</div>;
+};
+
+export default Even;
+~~~
+
+새로 생성한 Even 컴포넌트를 App에서 count 값이 짝수인 경우에만 보이도록 추가해 준다. <br/>
+
+~~~
+function App() {
+    return (
+        <div className="App">
+            <h1>Simple Counter</h1>
+            .....
+            {count % 2 === 0 ? <Even /> : null}
+            .....
+    );
+~~~
+
+화면에서 count 값을 홀수로 바꾸면, 콘솔 로그에 "unmount"가 출력되는 것을 확인할 수 있다. <br/><br/>
+
+> #### 라이프 사이클 제어를 응용하기 
+> 컴포넌트가 마운트될 때 특정 데이터를 불러오거나, <br/>
+> 업데이트 되었을 때 데이터가 정상적인 값인지를 확인하거나, <br/>
+> 컴포넌트가 언마운트될 때 해당 컴포넌트에서 쓰고 있던 메모리를 해제하려는 경우 등
+> 응용해서 사용할 수 있다. <br/>
 
 <br/><br/>
 
