@@ -842,10 +842,26 @@ function App() {
 > #### 라이프 사이클 제어를 응용하기 
 > 컴포넌트가 마운트될 때 특정 데이터를 불러오거나, <br/>
 > 업데이트 되었을 때 데이터가 정상적인 값인지를 확인하거나, <br/>
-> 컴포넌트가 언마운트될 때 해당 컴포넌트에서 쓰고 있던 메모리를 해제하려는 경우 등
+> 컴포넌트가 언마운트될 때 해당 컴포넌트에서 쓰고 있던 메모리를 해제하려는 경우 등 <br/>
 > 응용해서 사용할 수 있다. <br/>
 
 <br/><br/>
+
+## React 개발자 도구 사용하기
+chrome 웹 스토어에서 'React Development Tools' 확장 프로그램 추가. <br/>
+'파일 URL에 대한 액세스 허용' 옵션을 활성화한다. <br/>
+아래와 같이 개발자 도구에서 컴포넌트와 Props 상태를 확인할 수 있다. <br/>
+
+<img src="./images/react_development_tool_01.png" width="70%" /><br/>
+
+톱니바퀴 버튼을 누른 후, <br/>
+'Highlight updates when components render' 옵션을 체크하면 <br/>
+컴포넌트가 리렌더링되었을 때 하이라이팅이 되는 것을 확인할 수 있다. <br/>
+
+<img src="./images/react_development_tool_02.png" width="70%" /><br/>
+
+<br/><br/>
+
 
 
 
