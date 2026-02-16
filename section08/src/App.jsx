@@ -40,11 +40,21 @@ function App() {
         setTodos([newTodo, ...todos]);
     };
 
+    const onUpdate = (targetId) => {
+        setTodos(
+            todos.map((todo) =>
+                todo.id === targetId
+                    ? { ...todo, isDone: !todo.isDone }
+                    : todo
+            )
+        );
+    };
+
     return (
         <div className="App">
             <Header />
             <Editor onCreate={onCreate} /> {/* Props로 onCreate를 전달한다. */}
-            <List todos={todos} />
+            <List todos={todos} onUpdate={onUpdate} />
         </div>
     )
 }
