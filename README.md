@@ -908,11 +908,55 @@ chrome 웹 스토어에서 'React Development Tools' 확장 프로그램 추가.
 > 배열 데이터를 UI 목록으로 변환할 때는 `map` 메소드가 일반적이다. <br/>
 > React가 목록 변화를 추적하고 효율적으로 업데이트하도록 각 항목에 고유한 `key` prop을 설정해야 한다. <br/>
 
-
 <br/><br/>
 
+## useReducer
+컴포넌트 내부에 새로운 State를 생성하는 React Hook. <br/>
+모든 useState는 useReducer로 대체 가능. <br/>
+useState와는 달리 상태 관리 코드를 컴포넌트 외부로 분리할 수 있음. <br/>
+
+#### [useState의 경우]
+useState의 경우, 아래의 onCreate와 같이 컴포넌트 내부에 상태 관리 코드를 작성해야 함. <br/>
+~~~
+function App() {
+  const [todos, setTodos] = useState(mockData);
+  const idRef = useRef(3);
+  
+  const onCreate = (content) => {
+    const newTodo = {
+      id: idRef.current++,
+      isDone: false,
+      content: content,
+      date: new Date().getTime(),
+    };
+    
+    setTodos([newTodo, ...todos]);
+  };
+~~~
+
+#### [useReducer를 사용하면?]
+아래와 같이 useReducer를 사용하면 컴포넌트 외부에 상태 관리 코드를 분리할 수 있음. <br/>
+~~~
+function reducer() {
+  // .....
+}
+
+function App() {
+  const [todos, dispatch] = useReducer(reducer);
+  // .....
+}
+~~~
+
+컴포넌트의 주된 기능은 UI를 렌더링하는 것인데 <br/>
+App 컴포넌트 내부에 상태관리 코드들이 길어질 경우, <br/>
+state 값이 복잡해지거나 다양한 상태 변화를 제공할 경우에 <br/>
+useReducer를 사용하여 외부의 별도 함수로 만들어서 상태 관리 코드를 분리하면 <br/>
+App 컴포넌트가 어떤 UI를 렌더링을 하는지를 파악하기 쉽기 때문에 유지보수가 편리하다. <br/>
 
 
+
+
+<br/><br/>
 
 
 
