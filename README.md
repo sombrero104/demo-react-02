@@ -980,9 +980,61 @@ function App() {
     };
     .....
 ~~~
+<br/><br/>
 
+## useMemo 
+"메모이제이션(기억해두기, 메모해두기)" 기법을 기반으로 불필요한 연산을 최적화하는 리액트 훅. <br/>
+반복적으로 수행되는 동일한 연산에 대해 최초 연산 결과값을 메모리에 저장 후 <br/>
+다시 이 연산이 필요해 지면 저장되어 있는 결과값을 그대로 반환해줌. <br/>
+
+~~~
+const List = ({ todos, onUpdate, onDelete }) => {
+    // useMemo를 사용하기 이전의 getAnalyzedData() 함수(카운트값 갱신) 실행 버전.
+    /* const getAnalyzedData = () => {
+        const totalCount = todos.length;
+        const doneCount = todos.filter(
+            (todo) => todo.isDone
+        ).length;
+        const notDoneCount = totalCount - doneCount;
+
+        return {
+            totalCount,
+            doneCount,
+            notDoneCount,
+        };
+    }; */
+
+    /* const { totalCount, doneCount, notDoneCount } =
+            getAnalyzedData(); */
+    // 이렇게 사용하면 검색을 하는 경우에도 리렌더링되어서 getAnalyzedData()가 호출됨.
+    // todos 목록 데이터의 추가, 수정, 삭제 시에만 호출해야함. => useMemo 사용.
+
+    // useMemo 사용하기.
+    // const a = useMemo(() => { return 1; }, []);
+    // 두번째 인수 배열 => 의존성 배열, deps
+    // deps 배열 값이 변경될 경우, 첫번째 인수로 전달하는 콜백 함수가 다시 실행된다.
+    // useMemo에서 return 한 값이 a에 저장된다.
+
+    const { totalCount, doneCount, notDoneCount } =
+        useMemo(() => {
+            console.log("useMemo() START!");
+            const totalCount = todos.length;
+            const doneCount = todos.filter(
+                (todo) => todo.isDone
+            ).length;
+            const notDoneCount = totalCount - doneCount;
+
+            return {
+                totalCount,
+                doneCount,
+                notDoneCount,
+            };
+    }, [todos]); // todos 목록 데이터가 변경될 경우에만 콜백 함수를 실행하여 카운트를 갱신한다.
+    .....
+~~~
 
 <br/><br/>
+
 
 
 
