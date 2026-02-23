@@ -953,7 +953,33 @@ state 값이 복잡해지거나 다양한 상태 변화를 제공할 경우에 <
 useReducer를 사용하여 외부의 별도 함수로 만들어서 상태 관리 코드를 분리하면 <br/>
 App 컴포넌트가 어떤 UI를 렌더링을 하는지를 파악하기 쉽기 때문에 유지보수가 편리하다. <br/>
 
-
+~~~
+function reducer(state, action) {
+    switch (action.type) {
+        case "CREATE":
+            return [action.data, ...state];
+            // 새로운 할 일(action.data)을 맨 앞에 추가해서 새로운 배열을 만들어서 반환. (새 배열을 만들어야 리렌더링이 일어남.)
+            // React가 상태가 바뀐 것을 인식. todos => 새로 리턴된 배열로 바뀜. => 리렌더링 됨. (App 함수 다시 실행됨.)
+        .....
+    }   
+}
+function App() {
+    // const [todos, setTodos] = useState(mockData);
+    const [todos, dispatch] = useReducer(reducer, mockData);   // useState를 useReducer로 바꾸기. 
+    .....
+    const onCreate = (content) => {
+        dispatch({                    // dispatch => reducer() 에게 CREATE 작업 요청을 보냄.
+            type: "CREATE",
+            data: {
+                id: idRef.current++,
+                isDone: false,
+                content: content,
+                date: new Date().getTime(),
+            },
+        });
+    };
+    .....
+~~~
 
 
 <br/><br/>
