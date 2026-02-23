@@ -27,6 +27,7 @@ export default defineConfig([
       'no-unused-vars': 'off', // 사용되지 않는 변수가 있으면 경고 또는 오류를 내는 규칙.
       'react/prop-types': 'off', // PropTypes를 안 써도 ESLint가 경고하지 않음.
                                 // (PropTypes는 컴포넌트가 받는 props의 타입을 체크하는 도구.)
+      'react-refresh/only-export-components': 'off',
     },
   },
 ])

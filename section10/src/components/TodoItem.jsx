@@ -1,4 +1,5 @@
 import './TodoItem.css';
+import { memo } from 'react';
 
 const TodoItem = ({ id, isDone, content, date, onUpdate, onDelete }) => {
 
@@ -20,4 +21,14 @@ const TodoItem = ({ id, isDone, content, date, onUpdate, onDelete }) => {
     );
 };
 
-export default TodoItem;
+export default memo(TodoItem, (prevProps, nextProps) => {
+    // 원래 이 함수는 prevProps와 nextProps를 비교해서 바뀐 경우 false를 반환하여 리렌더링되고,
+    // 바뀌지 않은 경우 true를 반환해서 리렌더링 되지 않음.
+    // 이 함수를 커스터마이징해서 id, isDone, content, date 값이 바뀐 경우에만 리렌더링하도록 함.
+    if (prevProps.id !== nextProps.id) return false;
+    if (prevProps.isDone !== nextProps.isDone) return false;
+    if (prevProps.content !== nextProps.content) return false;
+    if (prevProps.date !== nextProps.date) return false;
+
+    return true;
+});

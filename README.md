@@ -1035,6 +1035,56 @@ const List = ({ todos, onUpdate, onDelete }) => {
 
 <br/><br/>
 
+## React.memo 
+컴포넌트를 인수로 받아, 최적화된 컴포넌트로 만들어 반환하는 React의 내장 함수. <br/>
+
+~~~
+const MemoizedComponent = memo(Component)   // memo()의 인수가 컴포넌트.
+~~~
+
+- 특정 컴포넌트에 최적화 기능을 추가한 다음에 결과값으로 반환해 준다.
+  - 반환된 MemoizedComponent => 최적화된 컴포넌트
+
+> #### 이 최적화된 MemoizedComponent 컴포넌트는 Props를 기준으로 메모이제이션 된다.
+> MemoizedComponent 는 부모 컴포넌트가 리렌더링되더라도 <br/>
+> 자신이 받는 Props가 바뀌지 않으면 다시는 리렌더링이 발생하지 않도록 메모이제이션되기 때문에 <br/>
+> 불필요한 리렌더링이 방지되어서 자동적으로 최적화가 이루어지게 된다. <br/>
+
+<br/>
+
+#### [Header.jsx]
+~~~
+import { memo } from 'react';
+.....
+export default memo(Header); // 자신이 받는 Props가 바뀌지 않으면 리렌더링 되지 않는다.
+~~~
+
+#### [TodoItem.jsx]
+~~~
+import { memo } from 'react';
+.....
+export default memo(TodoItem, (prevProps, nextProps) => {
+    // 원래 이 함수는 prevProps와 nextProps를 비교해서 바뀐 경우 false를 반환하여 리렌더링되고,
+    // 바뀌지 않은 경우 true를 반환해서 리렌더링 되지 않음.
+    // 이 함수를 커스터마이징해서 id, isDone, content, date 값이 바뀐 경우에만 리렌더링하도록 함.
+    if (prevProps.id !== nextProps.id) return false;
+    if (prevProps.isDone !== nextProps.isDone) return false;
+    if (prevProps.content !== nextProps.content) return false;
+    if (prevProps.date !== nextProps.date) return false;
+
+    return true;
+});
+~~~
+
+> #### 고차 컴포넌트(HOC, Higher Order Component)
+> 컴포넌트를 인수로 받아서 해당 컴포넌트를 최적화하거나 메모이제이션과 같이 추가적인 기능을 덧붙여서 <br/>
+> 기능이 추가된 새로운 컴포넌트를 반환해주는 memo()와 같은 메서드들을 <br/>
+> React에서는 '고차 컴포넌트(HOC, Higher Order Component)'라고 부른다. <br/>
+> 직접 고차 컴포넌트를 만들어서 사용할 수도 있다. <br/>
+
+
+<br/><br/>
+
 
 
 
