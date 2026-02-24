@@ -1190,6 +1190,17 @@ const Editor = () => {
 ~~~
 <br/><br/>
 
+## 페이지 라우팅 
+경로에 따라 알맞은 페이지를 렌더링하는 과정. (/new -> new 페이지 렌더링.)
+
+## React Router 
+
+~~~
+npm i react-router-dom 
+~~~
+
+<br/><br/>
+
 
 
 <br/><br/><br/><br/>
