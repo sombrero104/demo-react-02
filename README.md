@@ -1113,7 +1113,45 @@ const onCreate = useCallback((content) => {
 
 <br/><br/>
 
+## React Context
+- 컴포넌트 간의 데이터를 전달하는 또 다른 방법. <br/>
+- 기존의 Props가 가지고 있던 단점(Props Drilling)을 해결할 수 있음. <br/>
+  - Props는 부모 -> 자식으로만 데이터를 전달할 수 있음. 
+  - App -> ChildA -> ChildB 이렇게 단계적으로 전달해야함. 
+  - App -> List -> ... -> TodoItem 이렇게 많은 컴포넌트를 거쳐야 할 수도 있음. (Props Drilling)
+    - Props 이름이 바뀌면 모든 컴포넌트를 다 수정해줘야 함.
+- Context는 데이터를 보관하는 일종의 데이터 보관소. (객체)
 
+#### [App.jsx]
+~~~
+import { createContext } from 'react';
+.....
+export const TodoContext = createContext(); // 데이터를 하위에 있는 컴포넌트들에게 공급.
+
+function App() {
+  .....
+  return (
+            .....
+            <TodoContext.Provider value={{ todos, onCreate, onUpdate, onDelete }}>
+                {/* 이렇게 TodoContext.Provider 컴포넌트를 Editor, List의 부모 컴포넌트로 만들면,
+                    TodoContext.Provider의 하위 컴포넌트들은 모두 TodoContext에 저장된 데이터를 다이렉트로 공급 받을 수 있다. */}
+                <Editor />
+                <List />
+            </TodoContext.Provider>
+  .....
+~~~
+
+#### [Editor.jsx]
+~~~
+import { useContext } from 'react';
+import { TodoContext } from '../App';
+
+const Editor = () => {
+  const { onCreate } = useContext(TodoContext);
+  .....
+~~~
+
+<br/><br/>
 
 
 
