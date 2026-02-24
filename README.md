@@ -1151,6 +1151,43 @@ const Editor = () => {
   .....
 ~~~
 
+그런데 컨텍스트를 사용하도록 바꾼 후에 memo 최적화 설정이 풀리게 된다. <br/>
+
+~~~
+<TodoContext.Provider value={{ todos, onCreate, onUpdate, onDelete }}>
+~~~
+
+이 부분에서 App이 리렌더링 될 때마다 todos가 매번 새로 생성되기 때문에 값 상태가 변했다고 인식하는 것. <br/>
+그래서 상태가 변경될 데이터와 변경되지 않을 데이터를 분리해서 컨텍스트를 만들어 준다. <br/>
+
+#### [App.jsx]
+~~~
+export const TodoStateContext = createContext(); // 변화하는 데이터를 담을 컨텍스트.
+export const TodoDispatchContext = createContext(); // 변화하지 않는 데이터를 담을 컨텍스트.
+
+function App() {
+  .....
+  const memoizedDispatch = useMemo(() => {
+      return { onCreate, onUpdate, onDelete };
+  }, []);
+  .....
+  return (
+    .....
+    <TodoStateContext.Provider value={todos}>
+        <TodoDispatchContext.Provider value={memoizedDispatch}>
+            <Editor />
+            <List />
+        </TodoDispatchContext.Provider>
+    </TodoStateContext.Provider>
+  .....
+~~~
+
+#### [Editor.jsx]
+~~~
+const Editor = () => {
+  const { onCreate } = useContext(TodoDispatchContext);
+  .....
+~~~
 <br/><br/>
 
 
