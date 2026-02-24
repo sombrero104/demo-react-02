@@ -1,5 +1,5 @@
 import './App.css'
-import { useState, useRef, useReducer } from 'react';
+import { useState, useRef, useReducer, useCallback } from 'react';
 import Header from './components/Header';
 import Editor from './components/Editor';
 import List from './components/List';
@@ -51,18 +51,49 @@ function reducer(state, action) {
 function App() {
     // const [todos, setTodos] = useState(mockData);
     const [todos, dispatch] = useReducer(reducer, mockData);
-
     const idRef = useRef(3);
 
-    const onCreate = (content) => {
-        /* const newTodo = {
+    // useCallback 으로 최적화하기. (onCreate, onUpdate, onDelete를 최초 한번만 생성하기.)
+    // const func = useCallback(() => {}, []);
+    // 첫번째 인수: 불필요하게 재생성하지 않도록 최적화하고 싶은 함수, 두번째 인수: deps. deps가 변경되면 콜백 함수 실행.
+    // deps가 빈 배열이기 때문에 최초에만 콜백 함수가 실행됨.
+
+    // 최초 마운트 되었을 때에만 딱 한번 생성이 됨.
+    const onCreate = useCallback((content) => {
+        dispatch({      // dispatch => reducer() 에게 CREATE 작업 요청을 보냄.
+            type: "CREATE",
+            data: {
+                id: idRef.current++,
+                isDone: false,
+                content: content,
+                date: new Date().getTime(),
+            },
+        });
+    }, []);
+
+    const onUpdate = useCallback((targetId) => {
+        dispatch({
+            type: "UPDATE",
+            targetId: targetId,
+        });
+    }, []);
+
+    const onDelete = useCallback((targetId) => {
+        dispatch({
+            type: "DELETE",
+            targetId: targetId,
+        });
+    }, []);
+
+    /* const onCreate = (content) => {
+         *//* const newTodo = {
             id: idRef.current++,
             isDone: false,
             content: content,
             date: new Date().getTime(),
         };
 
-        setTodos([newTodo, ...todos]); */
+        setTodos([newTodo, ...todos]); *//*
 
         dispatch({      // dispatch => reducer() 에게 CREATE 작업 요청을 보냄.
             type: "CREATE",
@@ -73,31 +104,31 @@ function App() {
                 date: new Date().getTime(),
             },
         });
-    };
+    }; */
 
-    const onUpdate = (targetId) => {
-        /* setTodos(
+    /* const onUpdate = (targetId) => {
+         *//* setTodos(
             todos.map((todo) =>
                 todo.id === targetId
                     ? { ...todo, isDone: !todo.isDone }
                     : todo
             )
-        ); */
+        ); *//*
 
         dispatch({
             type: "UPDATE",
             targetId: targetId,
         });
-    };
+    }; */
 
-    const onDelete = (targetId) => {
-        /* setTodos(todos.filter((todo) => todo.id != targetId)); */
+    /* const onDelete = (targetId) => {
+         *//* setTodos(todos.filter((todo) => todo.id != targetId)); *//*
 
         dispatch({
             type: "DELETE",
             targetId: targetId,
         });
-    };
+    }; */
 
     return (
         <div className="App">

@@ -982,7 +982,9 @@ function App() {
 ~~~
 <br/><br/>
 
-## useMemo 
+## 최적화
+
+### 1. useMemo 
 "메모이제이션(기억해두기, 메모해두기)" 기법을 기반으로 불필요한 연산을 최적화하는 리액트 훅. <br/>
 반복적으로 수행되는 동일한 연산에 대해 최초 연산 결과값을 메모리에 저장 후 <br/>
 다시 이 연산이 필요해 지면 저장되어 있는 결과값을 그대로 반환해줌. <br/>
@@ -1035,7 +1037,7 @@ const List = ({ todos, onUpdate, onDelete }) => {
 
 <br/><br/>
 
-## React.memo 
+### 2. React.memo 
 컴포넌트를 인수로 받아, 최적화된 컴포넌트로 만들어 반환하는 React의 내장 함수. <br/>
 
 ~~~
@@ -1082,6 +1084,32 @@ export default memo(TodoItem, (prevProps, nextProps) => {
 > React에서는 '고차 컴포넌트(HOC, Higher Order Component)'라고 부른다. <br/>
 > 직접 고차 컴포넌트를 만들어서 사용할 수도 있다. <br/>
 
+<br/>
+
+### 3. useCallback과 함수 재생성 방지 
+
+~~~
+// const func = useCallback(() => {}, []);
+// 첫번째 인수: 불필요하게 재생성하지 않도록 최적화하고 싶은 함수, 두번째 인수: deps. deps가 변경되면 콜백 함수 실행.
+// deps가 빈 배열이기 때문에 최초에만 콜백 함수가 실행됨.
+
+// 최초 마운트 되었을 때에만 딱 한번 생성이 됨.
+const onCreate = useCallback((content) => {
+    dispatch({      // dispatch => reducer() 에게 CREATE 작업 요청을 보냄.
+        type: "CREATE",
+        data: {
+            id: idRef.current++,
+            isDone: false,
+            content: content,
+            date: new Date().getTime(),
+        },
+    });
+}, []);
+~~~
+
+- 최적화는 항상 기능을 먼저 구현한 후, 마지막에 최적화를 진행한다. <br/>
+- 모든 곳에 최적화를 적용하는 것이 아니라 꼭 필요한 경우에만 연산, 함수, 컴포넌트에 적용한다. <br/>
+- 가벼운 컴포넌트는 굳이 최적화하지 않아도 된다. 코드가 무거운 컴포넌트에 최적화를 진행한다. <br/>
 
 <br/><br/>
 
