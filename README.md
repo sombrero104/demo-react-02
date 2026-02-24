@@ -1196,9 +1196,49 @@ const Editor = () => {
 ## React Router 
 
 ~~~
+cd section12
+
 npm i react-router-dom 
 ~~~
 
+#### [main.jsx]
+~~~
+createRoot(document.getElementById('root')).render(
+    <BrowserRouter>{/* App 컴포넌트의 모든 자손 컴포넌트들에게 페이지 라우팅과 관련된 데이터들을 컨텍스트를 통해서 공급. */}
+        <App />
+    </BrowserRouter>
+);
+~~~
+
+#### [App.jsx]
+~~~
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
+
+function App() {
+    const nav = useNavigate();
+
+    const onClickButton = () => {
+        nav("/new");
+    };
+
+    return (
+        <>
+            <div>
+                <Link to={"/"}>Home</Link>
+                <Link to={"/new"}>New</Link>
+                <Link to={"/diary"}>Diary</Link>
+            </div>
+            <button onClick={onClickButton}>New 페이지로 이동</button>
+            <Routes>
+                <Route path="/" element={<Home/>} />
+                <Route path="/new" element={<New/>} />
+                <Route path="/diary" element={<Diary/>} />
+                <Route path="*" element={<NotFound/>} />{/* default */}
+            </Routes>
+        </>
+    );
+}
+~~~
 <br/><br/>
 
 
