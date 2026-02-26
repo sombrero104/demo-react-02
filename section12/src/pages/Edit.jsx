@@ -9,6 +9,7 @@ const Edit = () => {
     const params = useParams();
     const nav = useNavigate();
     const { onDelete, onUpdate } = useContext(DiaryDispatchContext);
+
     const data = useContext(DiaryStateContext);
     const [curDiaryItem, setCurDiaryItem] = useState();
 
