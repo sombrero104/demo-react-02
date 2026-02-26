@@ -137,7 +137,7 @@ function App() {
             }}>일기 삭제 테스트</button> */}
 
             <DiaryStateContext.Provider value={data}>
-                <DiaryDispatchContext.Provider value={ onCreate, onUpdate, onDelete }>
+                <DiaryDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
                     <Routes>
                         <Route path="/" element={<Home/>} />
                         <Route path="/new" element={<New/>} />
