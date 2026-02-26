@@ -4,13 +4,16 @@ import Button from '../components/Button';
 import Editor from '../components/Editor';
 import { useContext, useEffect, useState } from 'react';
 import { DiaryDispatchContext, DiaryStateContext } from '../App';
+import useDiary from '../hooks/useDiary';
 
 const Edit = () => {
     const params = useParams();
     const nav = useNavigate();
     const { onDelete, onUpdate } = useContext(DiaryDispatchContext);
+    const curDiaryItem = useDiary(params.id);
 
-    const data = useContext(DiaryStateContext);
+    // 아래 부분을 Diary.jsx와 공통으로 사용하기 위해 useDiary.jsx로 옮겨서 커스텀 훅을 만듬.
+    /* const data = useContext(DiaryStateContext);
     const [curDiaryItem, setCurDiaryItem] = useState();
 
     useEffect(() => {
@@ -23,7 +26,7 @@ const Edit = () => {
         }
 
         setCurDiaryItem(currentDiaryItem);
-    }, [params.id]); // params.id가 변경될 때에만 콜백 함수를 실행.
+    }, [params.id]); // params.id가 변경될 때에만 콜백 함수를 실행. */
 
     const onClickDelete = () => {
         if (window.confirm("정말 삭제하시겠습니까?")) {
