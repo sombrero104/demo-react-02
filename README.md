@@ -1241,6 +1241,32 @@ function App() {
 ~~~
 <br/><br/>
 
+## Web Storage
+웹 브라우저에 기본적으로 내장되어 있는 데이터베이스. <br/>
+자바스크립트 내장 함수만으로 접근 가능. <br/>
+Session Storage, Local Storage 로 나뉨. <br/>
+
+### 1. SessionStorage
+~~~
+sessionStorage.setItem(key, value)
+sessionStorage.getItem(key)
+~~~
+- **_브라우저 탭_** 별로 데이터를 보관.
+- 탭이 종료되기 전에는 데이터 유지. (새로고침 해도 유지.)
+- **_탭이 종료되거나 꺼지면 데이터 삭제._**
+
+### 2. LocalStorage
+~~~
+localStorage.setItem(key, value)
+localStorage.getItem(key)
+~~~
+- **_사이트 주소별_** 로 데이터 보관.
+- 사용자가 직접 삭제하기 전까지 데이터 보관. 
+- **_새로고침 또는 탭을 종료해도 유지._**
+
+<br/><br/>
+
+
 
 
 <br/><br/><br/><br/>
