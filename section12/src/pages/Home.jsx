@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import DiaryList from '../components/DiaryList';
+import usePageTitle from '../hooks/usePageTitle';
 
 const getMonthlyData = (pivotDate, data) => {
     const beginTime = new Date(pivotDate.getFullYear(), pivotDate.getMonth(), 1, 0, 0, 0).getTime(); // 1일 0시 0분 0초.
@@ -14,6 +15,8 @@ const getMonthlyData = (pivotDate, data) => {
 const Home = () => {
     // const [params, setParams] = useSearchParams();
     // console.log("# value: ", params.get("value"));  // 쿼리스트링 파라미터. (http://localhost:5173/?value=hi)
+
+    // usePageTitle('일기 목록');
 
     const data = useContext(DiaryStateContext);
     const [pivotDate, setPivotDate] = useState(new Date());

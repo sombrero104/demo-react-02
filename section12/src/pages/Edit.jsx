@@ -5,12 +5,15 @@ import Editor from '../components/Editor';
 import { useContext, useEffect, useState } from 'react';
 import { DiaryDispatchContext, DiaryStateContext } from '../App';
 import useDiary from '../hooks/useDiary';
+import usePageTitle from '../hooks/usePageTitle';
 
 const Edit = () => {
     const params = useParams();
     const nav = useNavigate();
     const { onDelete, onUpdate } = useContext(DiaryDispatchContext);
     const curDiaryItem = useDiary(params.id);
+
+    usePageTitle(`${params.id}번 일기 수정`);
 
     // 아래 부분을 Diary.jsx와 공통으로 사용하기 위해 useDiary.jsx로 옮겨서 커스텀 훅을 만듬.
     /* const data = useContext(DiaryStateContext);

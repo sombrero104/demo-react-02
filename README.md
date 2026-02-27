@@ -1266,8 +1266,42 @@ localStorage.getItem(key)
 
 <br/><br/>
 
+## 빌드
+제대로 만들어졌는지 빌드하기. 
+~~~
+npm run build
 
+> section12@0.0.0 build
+> vite build
 
+vite v7.3.1 building client environment for production...
+✓ 71 modules transformed.
+dist/index.html                   0.72 kB │ gzip:  0.46 kB
+dist/assets/index-CiLxBS8J.css    3.58 kB │ gzip:  1.01 kB
+dist/assets/index-HwC0uAh6.js   258.93 kB │ gzip: 93.14 kB
+✓ built in 1.34s
+~~~
+
+## 배포
+### Vercel
+https://vercel.com/ <br/>
+프론트엔드 개발자를 위한 클라우드 서비스. <br/>
+React.js의 확장판 개념인 Next.js를 오픈소스로 개발하는 회사. <br/>
+<br/>
+Vercel을 설치 후 로그인한다. <br/>
+~~~
+npm install -g vercel
+~~~
+~~~
+vercel login 
+~~~
+그리고 'vercel' 명령으로 프로젝트를 배포한다. <br/>
+~~~
+vercel 
+
+🔍  Inspect: https://vercel.com/makingmapping-1116s-projects/emotion-diary/8iJd1HUNNADHt3rbKc9yu1CU3PiN [2s]
+✅  Preview: https://emotion-diary-probp9hot-makingmapping-1116s-projects.vercel.app [17s]
+📝  To deploy to production (emotion-diary-jade-kappa.vercel.app), run `vercel --prod`
+~~~
 
 <br/><br/><br/><br/>
-
